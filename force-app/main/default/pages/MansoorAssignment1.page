@@ -1,0 +1,76 @@
+<apex:page standardController="Account">
+
+
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var myOptions={ zoom: 15,mapTypeId: google.maps.MapTypeId.ROADMAP,mapTypeControl: false };
+	var map;
+	var marker;
+	var geocoder = new google.maps.Geocoder();
+	var address ="{!Account.BillingStreet},{!Account.BillingPostalCode}{!Account.BillingCity}, {!Account.BillingState},{!Account.BillingCountry}";
+	var infowindow = new google.maps.InfoWindow({
+    content: "<a href='https://myfirstorgs-dev-ed.my.salesforce.com/{!Account.Id}' target='_blank'><b>{!Account.Name}</b></a><br>{!Account.BillingStreet}<br>{!Account.BillingCity}, {!Account.BillingPostalCode}<br>{!Account.BillingState}<br>{!Account.BillingCountry}"
+});
+ 
+	geocoder.geocode( { address: address}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK&&results.length) {
+			if (status != google.maps.GeocoderStatus.ZERO_RESULTS) 
+            {
+ 
+                //This will create map
+                map = new google.maps.Map(document.getElementById("map"), myOptions);
+                 
+                //This will set the center point of marker on the map
+                map.setCenter(results[0].geometry.location);
+                 
+                //This will create the marker
+                marker = new google.maps.Marker({
+                position: results[0].geometry.location,
+                map: map,
+                title: "{!Account.Name}"
+                });
+ 
+                //This will popup the info window when user will click marker
+                google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map,marker);
+                });
+                google.maps.event.addListener(infowindow, 'closeclick', function() {
+                map.setCenter(marker.getPosition());
+                });
+        	}
+		} 
+        else {
+            $('#map').css({'height' : '15px'});
+                $('#map').html("Oops! <b>{!Account.Name}'s </b> billing address could not be found, please make sure the address is correct.");
+            resizeIframe();
+        }
+	});
+    //This function will resize the Map Iframe
+	function resizeIframe() {
+		var me = window.name;
+    	if (me) {
+            var iframes = parent.document.getElementsByName(me);
+            if (iframes&&iframes.length == 1) {
+            height = document.body.offsetHeight;
+            iframes[0].style.height = height + "px";
+        	}
+     	}
+	}
+});
+</script>
+    <style>
+        #map {
+        font-family: Arial;
+        font-size:12px;
+        line-height:normal !important;
+        height:600px;
+        background:transparent;
+        }
+    </style>
+    <body>
+        
+    <div id="map"></div>
+    </body>
+</apex:page>

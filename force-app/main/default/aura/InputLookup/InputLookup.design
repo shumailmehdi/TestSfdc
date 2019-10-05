@@ -1,0 +1,5 @@
+<design:component >
+    <design:attribute name="type" Datasource="Contact,Account,Case" default="Account" description="Sobject Type" required="true"/>
+    <design:attribute name="value" default="" description="Source / Destination value" />
+    <design:attribute name="className" default="form-control" description="class name of the input object" />
+</design:component>

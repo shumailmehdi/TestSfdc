@@ -1,0 +1,31 @@
+<aura:component controller="fetchEvent" implements="flexipage:availableForAllPageTypes" access="global" >
+ <ltng:require styles="{!$Resource.SLDSv2 + '/fullcalendar.css'}"          
+    scripts="{!join(',',
+    $Resource.eventCalendarJquery + '/lib/jquery.min.js',
+    $Resource.eventCalendarJquery + '/lib/moment.min.js',
+	$Resource.eventCalendarJquery + '/fullcalendar.js')}"        
+    afterScriptsLoaded="{!c.scriptsLoaded}"/>
+ <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+ <aura:attribute name="startDate" type="Date" default=""/>
+ <aura:attribute name="endDate" type="Date" default=""/>
+ <aura:attribute name="mydata" type="Object"/>
+ <aura:attribute name="mycolumns" type="List"/>
+ <aura:attribute name="showTable" type="boolean" default="false"/>
+    
+ <ui:inputDate aura:id="expdate" label="Start Date" class="field" value="{!v.startDate}" displayDatePicker="true" />      
+ <ui:inputDate aura:id="expdate2" label="End Date" class="field" value="{!v.endDate}" displayDatePicker="true" />      
+  
+ <ui:button class="btn" label="Submit" press="{!c.setOutput}"/> 
+    
+  <!--  <lightning:button variant="brand" label="Submit" onclick="{! c.setOutput }" />
+    
+    <lightning:button variant="brand" label="Submit2" onclick="{! c.testMethod }" /> -->
+
+
+<aura:if isTrue="{!v.showTable}">
+ <lightning:datatable data="{! v.mydata }" 
+        columns="{! v.mycolumns }" 
+        keyField="Id"
+        hideCheckboxColumn="true"/>
+     </aura:if> 
+</aura:component>

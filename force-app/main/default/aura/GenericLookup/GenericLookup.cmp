@@ -1,0 +1,5 @@
+<aura:component >
+    <aura:attribute name="fieldName" type="String" />
+    
+    
+</aura:component>

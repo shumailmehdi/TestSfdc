@@ -1,0 +1,59 @@
+<apex:page controller="MansoorAssignement2Ctrl">
+  <apex:form >
+        <apex:pageBlock title="Context Variable">
+            <apex:pageBlockSection >
+                <apex:pageblockSectionItem >
+                    <apex:outputText value="Variable Name"/>
+                    <apex:Inputtext value="{!objectVarName}"/>  
+                </apex:pageblockSectionItem>
+                
+                <apex:pageblockSectionItem >
+                    <apex:outputText value="Object"/>
+                    <apex:selectList value="{!selectedObj}" size="1"> 
+                        <apex:selectOptions value="{!ObjectNames}"/>
+                        <apex:actionSupport event="onchange" rerender="FieldID" action="{!ObjectValue}"/>
+                    </apex:selectList>
+                </apex:pageblockSectionItem>
+                
+                <apex:pageblockSectionItem >
+                    <apex:outputText value="Object Fields"/>
+                    <apex:outputPanel id="FieldID">
+                        <apex:selectList value="{!selectedField}" size="4" >
+                            <apex:selectOptions value="{!FieldsVal}"/>
+                            <apex:actionSupport event="onchange" reRender="Data_Type,default_id" action="{!ReturnFieldDataType}"/>
+                        </apex:selectList>     
+                    </apex:outputPanel>
+                </apex:pageblockSectionItem>
+                
+                <apex:pageblockSectionItem >
+                    <apex:outputText value="Data Type"/>
+                    <apex:outputPanel id="Data_Type"> {!DataType}</apex:outputPanel> 
+                </apex:pageblockSectionItem>
+                
+                <apex:pageblockSectionItem >
+                    <apex:outputText value="Default Value"/>
+                    <apex:outputPanel id="default_id">
+                        <apex:inputText value="{!DefaultValue}"/>
+                    </apex:outputPanel>
+                    
+                </apex:pageblockSectionItem>
+                
+            </apex:pageBlockSection>
+            
+            <apex:pageblockButtons >
+                <apex:commandButton value="Save" action="{!saveAndRedirect}" status="pageStatus"/>
+                <apex:commandButton value="Cancel" action="{!Cancel}"/>
+            </apex:pageblockButtons>
+        </apex:pageBlock>
+      
+          <apex:actionStatus id="pageStatus">
+        	<apex:facet name="start">
+                <apex:outputPanel >
+                    <img src="/img/loading32.gif" width="25" height="25" />
+                    <apex:outputLabel value="Loading..."/>
+                </apex:outputPanel>            
+        	</apex:facet>
+    	  </apex:actionStatus>
+        
+    </apex:form> 
+</apex:page>

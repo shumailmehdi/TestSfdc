@@ -1,0 +1,11 @@
+<aura:component >
+    <div class="slds-grid slds-gutters">
+    
+	 <lightning:card class="slds-m-top_small slds-col slds-size_2-of-2" title="Opportunity" iconName="standard:opportunity">
+    	<div class="slds-media__body">
+          <h1 class="slds-page-header__title slds-truncate slds-align-middle slds-m-left_xx-large" title="Create Opportunity">Create Opportunity</h1>
+        </div>
+     </lightning:card>
+     
+    </div>   
+</aura:component>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Broadcast_Stopdate_greaterthan_startdate</fullName>
+    <active>true</active>
+    <description>This date from being greater than 14 days from the Broadcast Start
+Date</description>
+    <errorConditionFormula>If(Broadcasts_Start_Date__c + 14 &gt; Broadcasts_Stop_Date__c,True,False)</errorConditionFormula>
+    <errorDisplayField>Broadcasts_Stop_Date__c</errorDisplayField>
+    <errorMessage>Stop Date must be after 14 days of start date</errorMessage>
+</ValidationRule>
