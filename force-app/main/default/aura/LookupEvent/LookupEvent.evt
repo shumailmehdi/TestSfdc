@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="This events sends the id and name of selected lookup fields in Parent component">
+    <aura:attribute name="sObjectId" type="String" description="It will store the selected object id" />
+    <aura:attribute name="sObjectAPIName" required="true" type="String" description="The API name of the SObject to search" />
+</aura:event>

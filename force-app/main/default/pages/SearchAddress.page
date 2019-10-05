@@ -1,0 +1,4 @@
+<apex:page standardController="test__c">
+    <apex:iframe src="../apex/AddFin__Select_Address_Mapping?id={!test__c.Id}" scrolling="true" id="theIframe"/> 
+    
+</apex:page>

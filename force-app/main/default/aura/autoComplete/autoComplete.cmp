@@ -1,0 +1,22 @@
+<aura:component controller="AutocompleteController">
+    <ltng:require styles="{!$Resource.autoComplete_js + '/css/jquery-ui.min.css'}"      
+      	    scripts="{!join(',', 
+    				 $Resource.autoComplete_js + '/js/jquery-2.2.4.min.js', 
+                     $Resource.autoComplete_js + '/js/jquery-ui.min.js')}"
+	/>
+    <aura:attribute name="sObjectType" required="true" type="String" description="Name of the sObject that will be filtered" />
+    <aura:attribute name="fields" type="String[]" default="" description="List of fields to get with each record"/>
+    <aura:attribute name="limit" type="Integer" default="10" description="Limits the number of sObjects returned to this value" />
+    <aura:attribute name="inputLabel" type="String" default="Find" description="Label for text input"/>
+    
+    <aura:attribute name="ready" type="Boolean" default="false" description="Used to check if resources have been loaded"/>
+
+    <aura:registerEvent name="autocompleteEvent" type="c:autocompleteEvt"/>
+       
+  	
+
+    <div>
+        <label>{!v.inputLabel}: </label>
+        <input class="autocomplete" type="text" />
+    </div>
+</aura:component>

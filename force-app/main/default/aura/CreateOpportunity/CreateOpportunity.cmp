@@ -1,0 +1,177 @@
+<aura:component controller="CreateOpportunity" implements="flexipage:availableForAllPageTypes,force:appHostable,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- TypePicklist Attributes -->
+    <aura:attribute name="typeList" type="String[]" description=""/>
+	<!-- stageNameList Attributes -->
+    <aura:attribute name="stageNameList" type="String[]" description=""/>
+    <!-- LeadSourceList Attributes -->
+    <aura:attribute name="leadSourceList" type="String[]" description=""/>
+    
+    <!-- These attributes contains lookup ids -->
+   <!--  <aura:attribute name="lookUp_Account" type="String" />
+    <aura:attribute name="lookUp_Campaign" type="String" /> -->
+    <aura:attribute name="opportunities" type="Opportunity[]"/>
+    <aura:attribute name="newOpportunity" type="Opportunity" default="{'sobjectType' : 'Opportunity',
+                                                                       'Name' : '',
+                                                                       'Amount' : 0,
+                                                                       'CloseDate' : '',
+                                                                       'NextStep' : '',
+                                                                       'AccountId' : '',
+                                                                       'CampaignId' : '',
+                                                                       'Probability' : 0,
+                                                                       'StageName' : '',
+                                                                       'Type'   : '',
+                                                                       'LeadSource' : '',
+                                                                       'IsPrivate' : false
+                                                                      }" />
+    
+    <div class="slds-scope">
+        <div class="slds-form slds-form_compound">
+            <fieldset class="slds-form-element">
+                <form class="slds-form--stacked"> 
+                    <div class="slds-form-element__group">
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size_1-of-2">
+								
+                                <lightning:input aura:id="opportunityform" 
+                                                 type="text" 
+                                                 label="Opportunity Name" 
+                                                 name="opportunityName"
+                                                 value="{!v.newOpportunity.Name}"
+                                                 required="true"
+                                                 messageWhenValueMissing="Opportunity name is required"
+                                                 minlength="3"
+                                                 />
+							</div>
+                            <div class="slds-form-element slds-size_1-of-2">
+                                <lightning:input aura:id="opportunityform" 
+                                                 type="number" 
+                                                 name="opportunityAmount"
+                                                 value="{!v.newOpportunity.Amount}"
+                                                 label="Amount" 
+                                                 formatter="currency" 
+                                                 step="0.01" />
+                            </div>
+                        </div>
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size_1-of-2">
+							    <lightning:input aura:id="opportunityform"
+                                                 type="date" 
+                                                 label="Close Date" 
+                                                 name="closeDate"
+                                                 value="{!v.newOpportunity.CloseDate}"
+                                                 required="true" 
+                                                 messageWhenValueMissing="Close date is required"/>
+							</div>
+                            <div class="slds-form-element slds-size_1-of-2">
+                                 <lightning:input aura:id="opportunityform"
+                                                  type="text" 
+                                                  label="Next Step" 
+                                                  name="nextStep"
+                                                  value="{!v.newOpportunity.NextStep}"
+                                                  />
+							</div>
+                        </div>
+                      <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size_1-of-2">
+								<c:RN_Generic_lightning_Lookup aura:id="lookup_account" 
+                                                               label="Account" 
+                                                               sObjectAPIName="Account" 
+                                                               sObjectLabelName="accounts" 
+                                                               icon="account" />
+                                <!--Hidden field which contain selected account id -->
+                                <div class="slds-hide">
+                                	<lightning:input aura:id="opportunityform"
+                                                     type="text" 
+                                                     label="accountId" 
+                                                     name="accountId"
+                                                     value="{!v.newOpportunity.AccountId}"
+                                                     />
+                                </div>    
+							</div>
+                            <div class="slds-form-element slds-size_1-of-2">
+                     				<lightning:select aura:id="opportunityform" name="stage" label="Stage" required="true" 
+                                                      messageWhenValueMissing="Please select the any stage"
+                                                      value="{!v.newOpportunity.StageName}">
+                                        	<option value="" text="--None--"></option>
+                                            <aura:iteration items="{!v.stageNameList}" var="stageNameValue">
+                                              <option value="{!stageNameValue}" text="{!stageNameValue}"></option>
+                                            </aura:iteration>
+                                        
+                                    </lightning:select>
+    						</div>
+                      </div>
+                         <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size_1-of-2">
+                                <lightning:select aura:id="opportunityform" name="opportunityType" label="Type" value="{!v.newOpportunity.Type}">
+                                      <option value="">--None--</option>
+                                    <aura:iteration items="{!v.typeList}" var="typeValue">
+                                      <option value="{!typeValue}" text="{!typeValue}"></option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                             
+                            <div class="slds-form-element slds-size_1-of-2">
+                                 <lightning:input aura:id="opportunityform"
+                                                  type="number" 
+                                                  name="probablity" 
+                                                  label="Probablity %" 
+                                                  formatter="decimal"
+                                                  value="{!v.newOpportunity.Probability}"/>
+							</div>
+                        </div>
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size_1-of-2">
+								<lightning:select aura:id="opportunityform" name="leadSource" label="Lead Source" value="{!v.newOpportunity.LeadSource}">
+                                    	<option value="" text="--None--"></option>
+                                    <aura:iteration items="{!v.leadSourceList}" var="leadSourceValue">
+                                      <option value="{!leadSourceValue}" text="{!leadSourceValue}"></option>
+                                    </aura:iteration>
+                            	</lightning:select>
+							</div>
+                            <div class="slds-form-element slds-size_1-of-2">
+                 				<c:RN_Generic_lightning_Lookup aura:id="lookup_campaign" 
+                                                               label="Primary Campaign Source" 
+                                                               sObjectAPIName="Campaign" 
+                                                               sObjectLabelName="Primary Campaign Source" 
+                                                               icon="campaign" />
+                                <!--Hidden field which contain selected campaign id -->
+                                <div class="slds-hide">
+                                <lightning:input aura:id="opportunityform"
+                                                 type="text" 
+                                                 label="campaignId" 
+                                                 name="campaignId"
+                                                 value="{!v.newOpportunity.CampaignId}"/>
+                            	</div>
+                                
+                            </div>
+                        </div>
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element">
+								<lightning:input aura:id="opportunityform"
+                                                 type="checkbox" 
+                                                 label="Private" 
+                                                 name="privateOpportunity" 
+                                                 value="{v.newOpportunity.IsPrivate}"/>
+                            </div>
+                        </div>
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size_1-of-3">
+							<!-- Empty div to manage alignment -->
+                            </div>
+                         	<div class="slds-form-element slds-size_2-of-3">
+                            	<lightning:button class="slds-float_right slds-m-left_small" variant="neutral" label="Save &amp; New" onclick="{! c.newBtn }" />
+                                <lightning:button class="slds-float_right" variant="brand" label="Save" onclick="{! c.saveBtn }" />
+                               <!-- <lightning:button variant="neutral" label="Cancel" onclick="{! c.cancelBtn }" /> -->
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                
+                </form>   
+            </fieldset>	
+        </div>
+    </div>
+</aura:component>

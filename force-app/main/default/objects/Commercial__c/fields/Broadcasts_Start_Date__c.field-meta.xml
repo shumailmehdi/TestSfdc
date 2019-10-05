@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Broadcasts_Start_Date__c</fullName>
+    <defaultValue>TODAY()</defaultValue>
+    <description>The earliest date in which the XYZ customer wants the Commercial to be broadcast. This field defaults to the current date on new Commercial records.</description>
+    <externalId>false</externalId>
+    <label>Broadcasts Start Date</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

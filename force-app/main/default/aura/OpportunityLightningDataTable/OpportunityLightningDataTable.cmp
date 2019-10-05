@@ -1,0 +1,44 @@
+<aura:component controller="lightningTableController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable" access="global" >
+    <aura:attribute access="PUBLIC" name="manageView" type="Object[]"/>    
+    <aura:handler name="init" value="{!this}" action="{!c.getAccountRecord}" />
+    	<div class="slds">
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+              <thead>
+                <tr class="slds-text-title_caps">
+                  <th scope="col">
+                    <div class="slds-truncate" title="Account Name">Name</div>
+                  </th>
+                  <th scope="col">
+                    <div class="slds-truncate" title="Amount">Amount</div>
+                  </th>
+                  <th scope="col">
+                    <div class="slds-truncate" title="CloseDate">CloseDate</div>
+                  </th> 
+                     <th scope="col">
+                    <div class="slds-truncate" title="Account Name">Account Name</div>
+                  </th> 
+                     <th scope="col">
+                    <div class="slds-truncate" title="Probability">Probability</div>
+                  </th> 
+                     <th scope="col">
+                    <div class="slds-truncate" title="Stage Name">Stage Name</div>
+                  </th> 
+                     <th scope="col">
+                    <div class="slds-truncate" title="Type">Type</div>
+                  </th> 
+                     <th scope="col">
+                    <div class="slds-truncate" title="Lead Source">Lead Source</div>
+                  </th> 
+                   <th scope="col">
+                    <div class="slds-truncate" title="Action"></div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                  <aura:iteration items="{!v.manageView}" var="row">
+                       <c:Demo_CRUD_Component_ROW view="{!row}"/>
+                  </aura:iteration>                
+              </tbody>
+            </table>    
+        </div>
+</aura:component>
